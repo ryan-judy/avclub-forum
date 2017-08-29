@@ -1,0 +1,31 @@
+<div class = "container">
+
+  <div class = "row">
+    <div class = "col-md-12">
+    <div id="wrapper">
+      <h1>AV Club Newsfeed</h1>
+      <h2><i>Comment on the articles.</i></h2>
+      <div id="articles">
+      {{#each Article}}
+              <button class = "" data-value = {{this.id}}>
+                <p>{{this.title}}, {{this.link}}, </p>
+              </button>
+      {{/each}}
+      </div>
+      <div id="comments">
+      <form>
+        <div class="form-group">
+    
+        </div>
+      </form>
+
+    </div>
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class = "footer">
+    </div>
+  </div>
+
+</div>
