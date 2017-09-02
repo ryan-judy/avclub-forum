@@ -107,10 +107,9 @@ app.get("/articles/:id", function(req, res) {
 });
 // Create a new comment or replace an existing comment
 app.post("/articles/:id", function(req, res) {
-  console.log(req.body);
-  // Create a new comment and pass the req.body to the entry
+  // Create a new note and pass the req.body to the entry
   var newComment = new Comment(req.body);
-  // And save the new comment the db
+  // And save the new note the db
   newComment.save(function(error, doc) {
     // Log any errors
     if (error) {
@@ -118,8 +117,7 @@ app.post("/articles/:id", function(req, res) {
     }
     // Otherwise
     else {
-      // Use the article id to find and update it's comment
-      console.log(doc._id);
+      // Use the article id to find and update it's note
       Article.findOneAndUpdate({ "_id": req.params.id }, { "comment": doc._id })
       // Execute the above query
       .exec(function(err, doc) {
@@ -129,7 +127,7 @@ app.post("/articles/:id", function(req, res) {
         }
         else {
           // Or send the document to the browser
-          res.send(doc.title);
+          res.send(doc);
         }
       });
     }

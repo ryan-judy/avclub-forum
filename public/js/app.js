@@ -9,27 +9,38 @@ $(document).on("click", "button", function() {
     .done(function(data) {
       console.log(data._id)
       $("#comments").append("<h2>" + data.title + "</h2>");
-      $("#comments").append("<input id='titleinput' name='title' >");
-      $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
-      $("#comments").append("<button data-value='" + data._id + "' id='submitComment'>Submit Comment</button>");
+      $("#comments").append("<form><input class='titleInput' name='title' ><textarea class='bodyInput' name='body'></textarea><button data-id='" + data._id + "' id='savenote'>Save Note</button>");
       if (data.comment) {
         $("#titleinput").val(data.comment.title);
         $("#bodyinput").val(data.comment.body);
       }
     });
 });
-$(document).on("click", "#submitComment", function() {
-  var thisId = $(this).attr("data-value");
-  console.log($("#titleinput").val());
+
+$(document).on("click", "#savenote", function() {
+  var thisId = $(this).attr("data-id");  
+  event.preventDefault();
+   console.log(thisId)
+  var thisinput = $(".bodyInput").val();
+  console.log(thisinput)
   $.ajax({
     method: "POST",
     url: "/articles/" + thisId,
     data: {
-      title: $("#titleinput").val(),
-      body: $("#bodyinput").val()
+      // Value taken from title input
+      title: $(".titleInput").val(),
+      // Value taken from note textarea
+      body: $(".bodyInput").val()
     }
   })
+    // With that done
     .done(function(data) {
-      console.log(data)
+      // Log the response
+      console.log(data);
+      // Empty the notes section
+      $("#comments").empty();
     });
+  // Also, remove the values entered in the input and textarea for note entry
+  $(".titleinput").val("");
+  $(".bodyinput").val("");
 });
